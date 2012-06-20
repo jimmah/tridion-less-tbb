@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Blocks.Tridion.LessSupport.Compiler;
 using Blocks.Tridion.LessSupport.IO;
+using Tridion.ContentManager.CommunicationManagement;
 using Tridion.ContentManager.ContentManagement;
 using Tridion.ContentManager.Templating;
 using Tridion.ContentManager.Templating.Assembly;
@@ -43,6 +45,18 @@ namespace Blocks.Tridion.LessSupport
             }
         }
 
+        /// <summary>
+        /// The current <see cref="ComponentTemplate"/>.
+        /// </summary>
+        private ComponentTemplate ComponentTemplate
+        {
+            get
+            {
+                var template = _engine.PublishingContext.ResolvedItem.Template;
+                return template as ComponentTemplate;
+            }
+        }
+
         public void Transform(Engine engine, Package package)
         {
             if (engine == null) throw new ArgumentNullException("engine");
@@ -68,7 +82,8 @@ namespace Blocks.Tridion.LessSupport
             // Transform to CSS
             var css = CompileLess(less, file);
 
-            // TODO: Locate and add any referenced images.
+            // Process any url(..) images
+            css = ProcessImages(css);
             
             // Add to package
             _package.PushItem("Output", package.CreateStringItem(ContentType.Text, css));
@@ -113,11 +128,26 @@ namespace Blocks.Tridion.LessSupport
                     var fileName = match.Groups[1].Value;
                     var path = "{0}/{1}{2}".FormatWith(webdav, fileName, fileName.GetExtension(".less"));
 
-                    var import = (Component) _engine.GetObject(path);
+                    try
+                    {
+                        var import = (Component) _engine.GetObject(path);
 
-                    var importedFile = new VirtualFile(fileName) {BinaryContent = import.BinaryContent.GetByteArray()};
+                        if (import == null)
+                        {
+                            throw new Exception("Unable to locate component at {0}".FormatWith(path));
+                        }
 
-                    file.Directory.AddFile(importedFile);
+                        var importedFile = new VirtualFile(fileName)
+                        {
+                            BinaryContent = import.BinaryContent.GetByteArray()
+                        };
+
+                        file.Directory.AddFile(importedFile);
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Warning("Failed to locate import {0}: {1}".FormatWith(fileName, ex.Message));
+                    }
                 }
                 // ReSharper restore LoopCanBePartlyConvertedToQuery
             }
@@ -125,6 +155,61 @@ namespace Blocks.Tridion.LessSupport
             {
                 _log.Error("An error occurred in ProcessLess.ProcessImports: {0}".FormatWith(ex.Message), ex);
             }
+        }
+
+        private string ProcessImages(string source)
+        {
+            try
+            {
+                var webdav = ComponentWebDAVPath;
+                var failures = new List<string>();
+                
+                var images = Regex.Matches(source, @"url\((\S*)\)");
+                foreach (Match match in images)
+                {
+                    var image = match.Groups[1].Value;
+                    _log.Debug(image);
+
+                    var imagePath = "{0}/{1}".FormatWith(webdav, image.Replace("../", ""));
+
+                    try
+                    {
+                        var img = (Component) _engine.GetObject(imagePath);
+
+                        if (img == null)
+                        {
+                            throw new Exception("Unable to locate component at {0}".FormatWith(imagePath));
+                        }
+
+                        var publishPath = _engine.AddBinary(img.Id, ComponentTemplate.Id, null,
+                                                            img.BinaryContent.GetByteArray(),
+                                                            img.Title + image.GetExtension(".gif"));
+
+                        source = source.Replace(image, publishPath);
+                    }
+                    catch (Exception ex)
+                    {
+                        failures.Add(image);
+                        _log.Warning("Failed to locate image {0}: {1}".FormatWith(image, ex.Message));
+                    }
+                }
+
+                source = AppendFailures(source, "Images Not Found", failures);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("An error occurred in ProcessLess.ProcessImage: {0}".FormatWith(ex.Message), ex);
+            }
+
+            return source;
+        }
+
+        private static string AppendFailures(string source, string title, IEnumerable<string> failures)
+        {
+            source += "{0}/*** {1} ***/{0}".FormatWith(Environment.NewLine, title);
+            source += "/* {0} */".FormatWith(failures.Join(Environment.NewLine));
+
+            return source;
         }
     }
 }
