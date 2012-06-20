@@ -68,9 +68,8 @@ namespace Blocks.Tridion.LessSupport
             // Transform to CSS
             var css = CompileLess(less, file);
 
-            // Process any referenced images.
-            css = ProcessImages(css);
-          
+            // TODO: Locate and add any referenced images.
+            
             // Add to package
             _package.PushItem("Output", package.CreateStringItem(ContentType.Text, css));
         }
@@ -112,7 +111,7 @@ namespace Blocks.Tridion.LessSupport
                 foreach (Match match in Regex.Matches(source, @"@import(?:\s)(?:"")?([a-zA-z.\-_]*)"))
                 {
                     var fileName = match.Groups[1].Value;
-                    var path = "{0}/{1}{2}".FormatWith(webdav, fileName, fileName.GetExtension());
+                    var path = "{0}/{1}{2}".FormatWith(webdav, fileName, fileName.GetExtension(".less"));
 
                     var import = (Component) _engine.GetObject(path);
 
@@ -126,30 +125,6 @@ namespace Blocks.Tridion.LessSupport
             {
                 _log.Error("An error occurred in ProcessLess.ProcessImports: {0}".FormatWith(ex.Message), ex);
             }
-        }
-
-        /// <summary>
-        /// Looks for any url(..) statements in the CSS and ensures the relevant images
-        /// are published.
-        /// </summary>
-        private string ProcessImages(string source)
-        {
-            try
-            {
-                foreach (Match match in Regex.Matches(source, @"url\((\S*)\)"))
-                {
-                    var fileName = match.Groups[1].Value;
-
-                    // TODO: Locate the referenced image file
-                    // TODO: Add the binary to the Engine.
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.Error("An error occurred in ProcessLess.ProcessImages: {0}".FormatWith(ex.Message), ex);
-            }
-
-            return source;
         }
     }
 }

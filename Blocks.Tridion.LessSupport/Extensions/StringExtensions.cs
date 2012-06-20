@@ -21,10 +21,10 @@ namespace Blocks.Tridion.LessSupport
             return string.Format(format, args);
         }
 
-        public static string GetExtension(this string fileName)
+        public static string GetExtension(this string fileName, string defaultValue)
         {
             var index = fileName.LastIndexOf(".", StringComparison.InvariantCultureIgnoreCase);
-            return index >= 0 ? fileName.Substring(index, fileName.Length - index) : ".less";
+            return index >= 0 ? fileName.Substring(index, fileName.Length - index) : defaultValue;
         }
     }
 }
