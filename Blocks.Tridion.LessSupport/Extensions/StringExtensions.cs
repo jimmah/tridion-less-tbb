@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Blocks.Tridion.LessSupport
 {
-    internal static class StringExtensions
+    public static class StringExtensions
     {
         public static bool InsensitiveEquals(this string target, string other)
         {

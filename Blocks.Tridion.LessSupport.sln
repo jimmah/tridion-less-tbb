@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Tridion.LessSupport", "Blocks.Tridion.LessSupport\Blocks.Tridion.LessSupport.csproj", "{7D36BB86-0411-4908-B568-4F03969AFA33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Tridion.LessSupport.Tests", "Blocks.Tridion.LessSupport.Tests\Blocks.Tridion.LessSupport.Tests.csproj", "{C487BF7B-7188-4C8B-A27D-7330CB1A157B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{7D36BB86-0411-4908-B568-4F03969AFA33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D36BB86-0411-4908-B568-4F03969AFA33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D36BB86-0411-4908-B568-4F03969AFA33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

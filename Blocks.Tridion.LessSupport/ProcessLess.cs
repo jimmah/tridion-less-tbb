@@ -17,9 +17,16 @@ namespace Blocks.Tridion.LessSupport
     [TcmTemplateTitle("Process LESS")]
     public class ProcessLess : ITemplate
     {
-        private readonly TemplatingLogger _log = TemplatingLogger.GetLogger(typeof (ProcessLess));
+        private readonly TemplatingLogger _log;
+        private readonly TridionLessLogger _lessLog;
         private Engine _engine;
         private Package _package;
+
+        public ProcessLess()
+        {
+            _log = TemplatingLogger.GetLogger(typeof(ProcessLess));
+            _lessLog = new TridionLessLogger(_log);
+        }
 
         /// <summary>
         /// The current <see cref="Component"/>.
@@ -97,7 +104,7 @@ namespace Blocks.Tridion.LessSupport
         {
             try
             {
-                var compiler = new LessCompiler(_log);
+                var compiler = new LessCompiler(_lessLog);
                 var css = compiler.Compile(source, file);
 
                 return css;
@@ -168,7 +175,6 @@ namespace Blocks.Tridion.LessSupport
                 foreach (Match match in images)
                 {
                     var image = match.Groups[1].Value;
-                    _log.Debug(image);
 
                     var imagePath = "{0}/{1}".FormatWith(webdav, image.Replace("../", ""));
 
