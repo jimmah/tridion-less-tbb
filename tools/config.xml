@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<templateAssemblyUploadConfig>
+  <targetURL>http://bbtrid04</targetURL>
+  <userName />
+  <password />
+  <uploadPDB>true</uploadPDB>
+</templateAssemblyUploadConfig>
