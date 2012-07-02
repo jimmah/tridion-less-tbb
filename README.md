@@ -10,9 +10,10 @@
 James Simm [(http://github.com/jimmah)](http://github.com/jimmah)
 
 **NOTE**
-You will need to drop the following DLLs into the `/lib` and `/tools` directories to build the code:
+You will need to drop the following files into the `/lib` and `/tools` directories to build the code:
 
-- Tridion.Common.dll
-- Tridion.ContentManager.dll
-- Tridion.ContentManager.Publishing.dll
-- Tridion.ContentManager.Templating.dll
+- lib/Tridion.Common.dll
+- lib/Tridion.ContentManager.dll
+- lib/Tridion.ContentManager.Publishing.dll
+- lib/Tridion.ContentManager.Templating.dll
+- tools/TcmUploadAssembly.exe
