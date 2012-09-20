@@ -8,3 +8,8 @@ obj
 
 # ReSharper Cache
 _ReSharper*
+
+# Tridion DLLs
+lib/Tridion.*.dll
+tools/*.dll
+tools/*.exe
