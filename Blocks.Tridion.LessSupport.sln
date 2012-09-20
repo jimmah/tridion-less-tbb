@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Tridion.LessSupport", "Blocks.Tridion.LessSupport\Blocks.Tridion.LessSupport.csproj", "{7D36BB86-0411-4908-B568-4F03969AFA33}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blocks.Tridion.LessSupport.Tests", "Blocks.Tridion.LessSupport.Tests\Blocks.Tridion.LessSupport.Tests.csproj", "{C487BF7B-7188-4C8B-A27D-7330CB1A157B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{5FFDEE5B-B8E3-4FCF-B73C-F2BC8B34EC41}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotless.Core", "lib\dotless\src\dotless.Core\dotless.Core.csproj", "{D7A24E58-68D0-4B10-A324-EA33C822FA56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,8 +23,15 @@ Global
 		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C487BF7B-7188-4C8B-A27D-7330CB1A157B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7A24E58-68D0-4B10-A324-EA33C822FA56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7A24E58-68D0-4B10-A324-EA33C822FA56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7A24E58-68D0-4B10-A324-EA33C822FA56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7A24E58-68D0-4B10-A324-EA33C822FA56}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D7A24E58-68D0-4B10-A324-EA33C822FA56} = {5FFDEE5B-B8E3-4FCF-B73C-F2BC8B34EC41}
 	EndGlobalSection
 EndGlobal

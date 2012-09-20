@@ -27,6 +27,13 @@ namespace Blocks.Tridion.LessSupport.Tests.Compiler
         }
 
         [Test]
+        public void Argb_function_should_be_valid()
+        {
+            var css = _compiler.Compile("#header { color: argb(#123456); }", _file);
+            css.Should().Be("#header {\n  color: #ff123456;\n}\n");
+        }
+
+        [Test]
         public void Compile_throws_exception_with_invalid_LESS()
         {
             var exception = Assert.Throws<LessCompileException>(() => _compiler.Compile("#unclosed_rule {", _file));
