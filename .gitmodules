@@ -1,0 +1,3 @@
+[submodule "lib/dotless"]
+	path = lib/dotless
+	url = git://github.com/dotless/dotless.git
